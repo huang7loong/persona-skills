@@ -1,0 +1,11 @@
+{
+  "name": "persona-skills",
+  "displayName": "Persona Skills（人物思想推演库）",
+  "description": "Distill thinkers' philosophical logic and mental models into structured skills for personal decision analysis, idea stress-testing, and multi-persona debates.",
+  "version": "0.1.0",
+  "suggestedPrompts": [
+    "用马斯克的五步算法和白痴指数，帮我暴力精简当前这个方案/工作流",
+    "用黄仁勋的战略撤退与张一鸣的去抽象视角，评估我当前面临的选择",
+    "召开张一鸣、黄仁勋、马斯克三人圆桌，从不同底层公理独立拆解我的这个决策"
+  ]
+}
