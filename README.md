@@ -42,7 +42,9 @@ persona-skills/
 │   └── persona-skill-template.md       # 新增人物 Skill 的标准模板
 └── skills/
     ├── persona-distiller/              # 【元技能】从一手语料提炼新的人物 Skill
-    │   └── SKILL.md
+    │   ├── SKILL.md
+    │   └── resources/
+    │       └── persona-skill-template.md
     ├── persona-council/                # 【元技能】调度多视角独立推演与圆桌交锋
     │   └── SKILL.md
     ├── elon-musk/                      # 【人物技能】埃隆·马斯克思想推演系统
@@ -90,41 +92,62 @@ persona-skills/
 
 ## 快速上手（Quick Start）
 
-### 1. 克隆仓库
+本仓库所有技能均采用开放的 `SKILL.md` 标准，无专有运行时依赖，支持 **OpenAI Codex CLI / Claude Code / Cursor / Antigravity** 等主流 Agent Harness，且每个 Skill 目录均完全自包含。
+
+### 方式 1：一键安装（通用 CLI，适合 Codex / Claude Code / Cursor）
+
+```bash
+# 安装全部技能到全局（按交互提示选择目标 Harness）
+npx skills add huang7loong/persona-skills -g
+
+# 或只按需安装指定人物与圆桌技能
+npx skills add huang7loong/persona-skills \
+  --skill zhang-yiming --skill jensen-huang --skill elon-musk --skill persona-council -g
+```
+
+### 方式 2：`git clone` + 本地软链接（适合持续随仓库 `git pull` 更新）
 
 ```bash
 git clone https://github.com/huang7loong/persona-skills.git
 ```
 
-直接用 Antigravity 打开该目录时，`.agents/skills.json` 会自动加载 `skills/` 下的全部技能。
+各 Harness 全局路径及唤起方式对照：
 
-### 2. 在 Antigravity 中全局挂载（推荐）
+| Harness | 全局 Skills 目录 | 项目级目录 | 对话中唤起方式 |
+| :--- | :--- | :--- | :--- |
+| **OpenAI Codex CLI** | `~/.agents/skills/` | `.agents/skills/` | 自然语言自动匹配，或输入 `$zhang-yiming` 等 |
+| **Claude Code** | `~/.claude/skills/` | `.claude/skills/` | 自然语言自动匹配，或输入 `/zhang-yiming` |
+| **Cursor** | `~/.cursor/skills/` | `.cursor/skills/` 或 `.agents/skills/` | Agent 模式自动触发，或 `/` 显式选择 |
+| **Antigravity** | `~/.gemini/config/skills.json` 或 `plugins/` | `.agents/skills.json` | 自动按 `description` 发现并加载 |
 
-如果你想在**任意项目或对话**中随时调用这些人物视角，可任选下面一种方式注册到 `~/.gemini/config/`（将 `<path-to>` 替换为你实际克隆仓库的路径）：
+以 **Codex CLI** 为例，将全部技能软链到全局目录（Claude Code / Cursor 只需把 `~/.agents/skills` 替换为 `~/.claude/skills` 或 `~/.cursor/skills`）：
 
-#### 方式 A：作为 Skills 注册（轻量）
-
-编辑 `~/.gemini/config/skills.json`（若不存在则新建），在 `entries` 中加入本仓库的 `skills` 目录：
-
-```json
-{
-  "entries": [
-    {
-      "path": "<path-to>/persona-skills/skills"
-    }
-  ]
-}
+```bash
+mkdir -p ~/.agents/skills
+for d in <path-to>/persona-skills/skills/*; do
+  ln -sfn "$d" ~/.agents/skills/"$(basename "$d")"
+done
 ```
 
-#### 方式 B：作为完整 Plugin 挂载（同时启用 `rules/AGENTS.md` 推演纪律与卡片快捷入口）
+### 方式 3：Antigravity 专属全局挂载（可同步启用 `rules/AGENTS.md` 与 Plugin 卡片）
 
-二选一即可：
+直接用 Antigravity 打开克隆目录时，`.agents/skills.json` 会自动加载 `skills/` 下的全部技能。若希望在任意工作区全局生效，可任选其一配置到 `~/.gemini/config/`（将 `<path-to>` 替换为你实际克隆仓库的路径）：
 
-1. **软链接到插件目录**：
+1. **轻量注册（仅 Skills）**：在 `~/.gemini/config/skills.json` 的 `entries` 中加入：
+   ```json
+   {
+     "entries": [
+       {
+         "path": "<path-to>/persona-skills/skills"
+       }
+     ]
+   }
+   ```
+2. **完整 Plugin 挂载（软链接）**：
    ```bash
    ln -s <path-to>/persona-skills ~/.gemini/config/plugins/persona-skills
    ```
-2. **或通过 `~/.gemini/config/plugins.json` 显式引入**：
+3. **或通过 `~/.gemini/config/plugins.json` 显式引入**：
    ```json
    {
      "entries": [
@@ -137,10 +160,6 @@ git clone https://github.com/huang7loong/persona-skills.git
    ```
 
 > **提示**：`rules/AGENTS.md` 已显式限定“仅在激活本仓库人物 Skill 或明确要求人物推演时生效”，挂载为全局 Plugin 也不会干扰日常编程或普通问答。
-
-### 3. 跨工具使用说明
-
-本仓库所有技能均采用标准 Markdown（`SKILL.md` + `references/` + `examples/`）组织，不绑定专有运行时，也可以直接复制或软链接到 Claude Code、Cursor 等其他支持 Agent Skills 规范的工具中使用。
 
 ---
 

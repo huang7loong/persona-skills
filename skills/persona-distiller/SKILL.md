@@ -39,14 +39,14 @@ description: >-
 3. 单独总结该人物体系的**系统性盲区（Epistemic Boundaries）**（例如工具理性对情感与意义维度的忽视、特定时代与行业路径的局限）。
 
 ### 第 5 步：按标准模板落盘并更新索引
-严格参照 [persona-skill-template.md](../../templates/persona-skill-template.md) 创建以下目录结构：
+严格参照 [persona-skill-template.md](./resources/persona-skill-template.md) 创建以下目录结构：
 - `skills/<kebab-case-name>/SKILL.md`：保持精炼（建议 120–180 行），只放核心坐标、公理、推理算法、交互模式、反模式与索引链接。
 - `skills/<kebab-case-name>/references/mental-models.md`：思想阶段、核心模型深析（含常见误解辨析）与盲区剖析。
 - `skills/<kebab-case-name>/references/quotes.md`：按主题归类的一手原话，每条必须标注时间与出处。
 - `skills/<kebab-case-name>/references/cases.md`：真实决策与反思案例。
 - `skills/<kebab-case-name>/examples/calibration-qa.md`：至少 3 组标定示范（个人决策、想法压力测试、跨时代新议题外推）。
 
-完成后，同步更新根目录 [README.md](../../README.md) 中的“已收录人物索引”表格。
+若在完整 `persona-skills` 仓库内执行，同步更新仓库根目录的 `README.md` 中的“已收录人物索引”表格。
 
 ### 第 6 步：标定自检（Calibration Audit）
 用 `calibration-qa.md` 的 3 类测试题做一次试跑，逐项核对：

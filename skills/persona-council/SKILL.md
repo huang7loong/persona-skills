@@ -13,7 +13,7 @@ description: >-
 ## 核心原则：防止单上下文“和稀泥”
 
 如果让同一个对话流里连续扮演 A 和 B，模型往往会提前妥协，导致观点趋同、缺乏真实锋芒。因此优先采用以下隔离策略：
-- **多 Subagent 并行独立推演（优先）**：若当前环境支持 `invoke_subagent`，为每个参会人物启动一个独立 subagent，仅要求其加载自身对应的 `SKILL.md` 及 `references/` 独立作答，禁止相互偷看彼此结论后再修改立场。
+- **多 Subagent 并行独立推演（优先）**：若当前 Harness 支持并行子代理 / subagent 机制（如 Antigravity 的 `invoke_subagent`、Claude Code / Codex 的 subagent 等），为每个参会人物启动一个独立 subagent，仅要求其加载自身对应的 `SKILL.md` 及 `references/` 独立作答，禁止相互偷看彼此结论后再修改立场。
 - **单上下文严格分块（回退）**：若无法调用 subagent，必须严格分章节独立完成一方的全部公理推演与结论后，再彻底切换到另一方的底层假设重新审题，禁止在中途互相迎合折中。
 
 ## 两种圆桌模式
