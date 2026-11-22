@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+  <!-- Outer orbital ring inside 10% safe margin (26..230) -->
+  <circle cx="128" cy="128" r="96" stroke="#64748B" stroke-opacity="0.35" stroke-width="5" stroke-dasharray="10 8" />
+
+  <!-- Connecting triangle paths representing multi-persona tension -->
+  <path d="M128 42 L202 172 L54 172 Z" stroke="#64748B" stroke-opacity="0.5" stroke-width="4" stroke-linejoin="round" />
+
+  <!-- Converging rays toward central independent judgment core -->
+  <line x1="128" y1="42" x2="128" y2="128" stroke="#4F46E5" stroke-width="5" stroke-linecap="round" />
+  <line x1="202" y1="172" x2="128" y2="128" stroke="#0D9488" stroke-width="5" stroke-linecap="round" />
+  <line x1="54" y1="172" x2="128" y2="128" stroke="#D97706" stroke-width="5" stroke-linecap="round" />
+
+  <!-- Three outer persona axiom nodes (Indigo, Teal, Amber - readable on light & dark themes) -->
+  <circle cx="128" cy="42" r="14" fill="#4F46E5" stroke="#EEF2FF" stroke-width="3" />
+  <circle cx="202" cy="172" r="14" fill="#0D9488" stroke="#F0FDFA" stroke-width="3" />
+  <circle cx="54" cy="172" r="14" fill="#D97706" stroke="#FFFBEB" stroke-width="3" />
+
+  <!-- Central independent judgment diamond -->
+  <path d="M128 100 L156 128 L128 156 L100 128 Z" fill="#6366F1" stroke="#E0E7FF" stroke-width="4" stroke-linejoin="round" />
+  <circle cx="128" cy="128" r="7" fill="#F8FAFC" />
+</svg>

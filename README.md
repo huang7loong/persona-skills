@@ -1,8 +1,25 @@
-# Persona Skills（人物思想推演库）
+<div align="center">
+  <img src="./assets/logo.svg" width="88" alt="Persona Skills Logo" />
+  <h1>Persona Skills（人物思想推演库）</h1>
+  <p>将思想者与创始人的底层公理、推理算法与认知盲区沉淀为可执行的 Agent Skills，用于个人深度思考、决策推演与观点压力测试。</p>
+  <p>License: <a href="./LICENSE">MIT</a> · 兼容 Antigravity Skill / Plugin 规范</p>
+</div>
 
-一个用于**个人深度思考、决策推演与观点压力测试**的 Skill 仓库。
+---
 
-与追求“语气像不像”的娱乐角色扮演 Prompt 不同，本仓库把每一位思想者、创始人或历史人物的**底层公理、价值排序、推理算法与认知盲区**结构化为可执行的 Antigravity Skill（同时兼容标准 Plugin 规范），让 AI 成为帮你照见盲区、检验逻辑的“可运行思维操作系统”。
+与追求“语气像不像”的娱乐角色扮演 Prompt 不同，本仓库把每一位人物的**底层世界观公理、价值排序、可执行推理步骤、一手核实语料与固有认知盲区**拆解为结构化的 Skill，让 AI 成为帮你照见盲区、检验逻辑的“可运行思维操作系统”。
+
+---
+
+## 为什么不是普通角色扮演？同一个问题，三种不同推演逻辑
+
+面对“**手头同时铺开多件事、精力分散且不知该不该跳出舒适区**”这同一个问题，仓库中三位人物会从完全不同的底层公理切入：
+
+| 视角 | 核心切入公理 | 先拷问什么 | 倾向的动作 | 必附的视角盲区 |
+| :--- | :--- | :--- | :--- | :--- |
+| **张一鸣**（`zhang-yiming`） | 一手事实、延迟满足、全局最优、平常心 | 哪部分只是路径依赖？你拿到了什么一手反馈？ | 去抽象、搭最小可验证闭环、保持高信息密度输入 | 易低估当下生活节奏与非量化情绪损耗 |
+| **黄仁勋**（`jensen-huang`） | 物理光速基准、零亿美元市场、战略撤退、低预期韧性 | 你是在红海里硬卷，还是在卡位新空白？今天必须放弃哪条支线？ | 果断战略撤退砍支线、定义早期领先指标（EIoFS）、死磕全栈痛点 | 若无稳定现金流底座，长期零反馈押注易耗尽窗口 |
+| **埃隆·马斯克**（`elon-musk`） | 物理是法律、白痴指数、五步算法（删减先于优化） | 你的工作流里有多少“白痴摩擦”？哪些需求压根不该存在？ | 先暴力砍掉 30%–50% 冗余步骤、最后再谈自动化 | 暴力删减法若套用于人际信任与品牌生态易造成不可逆损伤 |
 
 ---
 
@@ -10,8 +27,13 @@
 
 ```text
 persona-skills/
+├── LICENSE                             # MIT 开源协议
+├── README.md                           # 仓库说明、使用指南与免责声明
+├── CONTRIBUTING.md                     # 新增人物规范与四条质量红线
 ├── plugin.json                         # Antigravity Plugin 清单
-├── README.md                           # 仓库说明与人物索引
+├── .gitignore                          # 忽略临时文件及本地隐私笔记/密钥
+├── assets/
+│   └── logo.svg                        # 仓库与 Plugin 图标
 ├── .agents/
 │   └── skills.json                     # 在本仓库目录内自动发现 skills/
 ├── rules/
@@ -66,9 +88,63 @@ persona-skills/
 
 ---
 
-## 日常使用方法
+## 快速上手（Quick Start）
 
-在本仓库内（或全局挂载后在任意工作区）直接向 Agent 提问即可：
+### 1. 克隆仓库
+
+```bash
+git clone https://github.com/huang7loong/persona-skills.git
+```
+
+直接用 Antigravity 打开该目录时，`.agents/skills.json` 会自动加载 `skills/` 下的全部技能。
+
+### 2. 在 Antigravity 中全局挂载（推荐）
+
+如果你想在**任意项目或对话**中随时调用这些人物视角，可任选下面一种方式注册到 `~/.gemini/config/`（将 `<path-to>` 替换为你实际克隆仓库的路径）：
+
+#### 方式 A：作为 Skills 注册（轻量）
+
+编辑 `~/.gemini/config/skills.json`（若不存在则新建），在 `entries` 中加入本仓库的 `skills` 目录：
+
+```json
+{
+  "entries": [
+    {
+      "path": "<path-to>/persona-skills/skills"
+    }
+  ]
+}
+```
+
+#### 方式 B：作为完整 Plugin 挂载（同时启用 `rules/AGENTS.md` 推演纪律与卡片快捷入口）
+
+二选一即可：
+
+1. **软链接到插件目录**：
+   ```bash
+   ln -s <path-to>/persona-skills ~/.gemini/config/plugins/persona-skills
+   ```
+2. **或通过 `~/.gemini/config/plugins.json` 显式引入**：
+   ```json
+   {
+     "entries": [
+       {
+         "path": "<parent-dir-of-repo>",
+         "include_only": ["persona-skills"]
+       }
+     ]
+   }
+   ```
+
+> **提示**：`rules/AGENTS.md` 已显式限定“仅在激活本仓库人物 Skill 或明确要求人物推演时生效”，挂载为全局 Plugin 也不会干扰日常编程或普通问答。
+
+### 3. 跨工具使用说明
+
+本仓库所有技能均采用标准 Markdown（`SKILL.md` + `references/` + `examples/`）组织，不绑定专有运行时，也可以直接复制或软链接到 Claude Code、Cursor 等其他支持 Agent Skills 规范的工具中使用。
+
+---
+
+## 日常使用方法
 
 1. **个人决策与工作流重构（单人物推演）**
    > “激活 `elon-musk` skill，用五步算法和白痴指数帮我重构当前这套过于复杂的个人工作流。”
@@ -82,50 +158,23 @@ persona-skills/
 
 ---
 
-## 如何挂载到 Antigravity 全局生效
-
-只在当前仓库打开时，`.agents/skills.json` 会自动加载 `skills/` 下的全部技能。如果你想在**任意项目或对话**里随时调用它们，可以任选下面一种方式注册到 `~/.gemini/config/`：
-
-### 方式 A：作为 Skills 注册（轻量，推荐优先使用）
-
-编辑 `~/.gemini/config/skills.json`（若不存在则新建），将本仓库的 `skills` 目录加入 `entries`：
-
-```json
-{
-  "entries": [
-    {
-      "path": "~/Projects/persona-skills/skills"
-    }
-  ]
-}
-```
-
-### 方式 B：作为完整 Plugin 挂载（同时启用 `rules/AGENTS.md` 推演纪律与卡片快捷入口）
-
-二选一即可：
-
-1. **软链接到插件目录**：
-   ```bash
-   ln -s ~/Projects/persona-skills ~/.gemini/config/plugins/persona-skills
-   ```
-2. **或通过 `~/.gemini/config/plugins.json` 显式引入**：
-   ```json
-   {
-     "entries": [
-       {
-         "path": "~/Projects",
-         "include_only": ["persona-skills"]
-       }
-     ]
-   }
-   ```
-
-> **提示**：`rules/AGENTS.md` 已显式限定“仅在激活人物 Skill 或明确要求人物推演时生效”，挂载为全局 Plugin 也不会干扰日常写代码或普通问答。
-
----
-
 ## 仓库维护原则
 
 - **绝不编造语录**：所有原话必须附可追溯的年份、场合与出处，存疑语录不入库。
 - **保持 `SKILL.md` 精炼**：只放公理、推理算法和纪律；大段案例与语录放进 `references/` 按需读取。
 - **每次新增或修改后必跑标定**：用 `examples/calibration-qa.md` 测试，确认模型是在“用其逻辑推理”，而不是在“背诵其口号”。
+
+---
+
+## 参与贡献与开源协议
+
+- 欢迎补充新的思想者、创始人或经典学者，以及校对现有一手引文与案例，请先阅读 [CONTRIBUTING.md](./CONTRIBUTING.md) 中的四条质量红线与自检清单。
+- 本项目采用 [MIT License](./LICENSE) 开源。
+
+---
+
+## 免责声明（Disclaimer）
+
+- 本仓库所有内容均基于公开演讲、采访实录、个人公开文本、传记及权威公开报道提炼思维模型与推理方法，**仅用于个人思考辅助、结构化推演研究与开源社区交流学习**。
+- 仓库中的推演结论与分析框架**不代表任何人物本人的观点、立场或背书**，与提及的个人、企业或机构亦无任何官方关联。
+- 本仓库提供的分析结果不构成任何投资、商业、职业、法律或医疗建议，任何现实决策请结合自身客观约束独立判断并自担风险。

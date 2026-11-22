@@ -3,3 +3,10 @@
 *.swp
 .venv/
 __pycache__/
+
+# Personal notes & local secrets (never commit to public repo)
+notes/
+private/
+*.local.md
+.env
+.env.*
